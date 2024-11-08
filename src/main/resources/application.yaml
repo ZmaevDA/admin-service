@@ -1,0 +1,51 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: admin-service
+    version: 0.0.1
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: backend
+            client-secret: a5cvZBRdDGHHR6wN1vgFEV3DPktLmCbL
+            scope: openid, profile
+            authorization-grant-type: authorization_code
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8282/realms/support
+            jwk-set-uri: http://localhost:8282/realms/support/protocol/openid-connect/certs
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8282/realms/support
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/support-db
+    username: admin
+    password: admin
+
+  flyway:
+    enabled: true
+    schemas: admin
+    default-schema: admin
+    locations: classpath:db/migration
+
+secret-key: 123
+oAuth_security_schema: my_oAuth_security_schema
+keycloak-auth-redirect: http://localhost:8282/realms/support/protocol/openid-connect/auth
+service-url: http://localhost:8080/api/
+
+keycloak:
+  auth-server-url: http://localhost:8282/auth
+  server-url: http://localhost:8282
+  realm: support
+  resource: backend
+  username: admin
+  password: admin
+  client-secret: a5cvZBRdDGHHR6wN1vgFEV3DPktLmCbL
+
